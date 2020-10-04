@@ -1,0 +1,35 @@
+#include "add.h"
+#include <iostream>
+#include <algorithm>
+
+Add::Add(stream& staging) : staging(staging) {}
+
+void Add::operator()(std::vector<std::string> file_paths)
+{
+	//add paths to staging file
+	std::string line; 
+	std::vector<std::string> already_existing;
+	while (std::getline(staging, line)) {
+		already_existing.push_back(line);
+	}
+	staging.clear();
+	for (auto& file_path : file_paths) {
+		if (std::all_of(already_existing.begin(), already_existing.end(),
+			[&](std::string existing) {
+			return file_path != existing;
+		})) {
+			std::cout << file_path << "\n";
+			staging << file_path << std::endl;
+		}
+	}
+	
+}
+
+std::string Add::generate_blob_key_value(std::string file)
+{
+	const std::string objects_path = "C:\\Users\\lhawk\\OneDrive\\Projects\\shit\\Debug\\shit\\Objects\\";
+
+		
+
+	return std::string();
+}
