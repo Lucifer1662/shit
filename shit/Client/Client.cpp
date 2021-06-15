@@ -6,6 +6,7 @@
 #include <stdlib.h> 
 #include "Client.h"
 #include <cpprest/rawptrstream.h>
+#include <filesystem>
 
 using namespace utility;                    // Common utilities like string conversions
 using namespace web;                        // Common features like URIs.
@@ -89,18 +90,36 @@ void get(std::string remotePath, std::string path)
 
 template<typename T> T read(Concurrency::streams::istream& stream) {
 	T t;
-	Concurrency::streams::rawptr_buffer<char> buffer(&t, sizeof(T), std::ios_base::binary);
-	wait_get(stream.read(buffer, sizeof(T)));
+	Concurrency::streams::rawptr_stream<char> s = Concurrency::streams::rawptr_stream<char>();
+	auto ss = s.open_ostream((char*)&t, sizeof(T));
+
+	
+	try {
+		wait_get(stream.read(ss.streambuf(), sizeof(T)));
+	}
+	catch (std::exception e) {
+		std::cout << e.what();
+	}
+	ss.close();
 	return t;
 }
 
+void read(Concurrency::streams::istream& stream, char* data, size_t size) {
+	Concurrency::streams::rawptr_stream<char> s = Concurrency::streams::rawptr_stream<char>();
+	auto ss = s.open_ostream(data, size);
+
+	try {
+		wait_get(stream.read(ss.streambuf(), size));
+	}
+	catch (std::exception e) {
+		std::cout << e.what();
+	}
+	ss.close();
+}
+
 std::string get_string(Concurrency::streams::istream& stream, size_t size) {
-	Concurrency::streams::streambuf<char> buffer;
-	stream.read(buffer, size).wait();
-	char* pathStart = new char[size];
-	buffer.scopy(pathStart, size);
-	std::string path(pathStart);
-	free(pathStart);
+	std::string path = std::string(size, ' ');
+	read(stream, (char*)path.c_str(), size);
 	return path;
 }
 
@@ -111,15 +130,14 @@ std::string get_string(Concurrency::streams::istream& stream) {
 
 void getFile(Concurrency::streams::istream& stream) {
 	auto path = get_string(stream);
-	auto file_size = wait_get(stream.extract<size_t>());
-	
-	Concurrency::streams::streambuf<char> buffer;
-	stream.read(buffer, file_size).wait();
+	auto file_size = read<size_t>(stream);
 
-	concurrency::streams::fstream::open_ostream(toUtilStr(path)).then([&](Concurrency::streams::ostream os) {
-		os << buffer;
-		os.close();
-	});
+	
+	std::filesystem::create_directories(path.substr(0, path.find_last_of('\\')));
+
+	auto os = wait_get(concurrency::streams::fstream::open_ostream(toUtilStr(path))); 
+	os.write(stream.streambuf(), file_size);
+	os.close();
 }
 
 
@@ -133,7 +151,8 @@ void getFiles(std::string remotePath, std::string snapshot, std::string branch)
 
 	auto response = wait_get(client.request(methods::GET, builder.to_string()));
 	auto stream = response.body();
-	while (!stream.is_eof()) {
+	auto files = read<size_t>(stream);
+	for(size_t i = 0; i < files; i++){
 		getFile(stream);
 	}
 }

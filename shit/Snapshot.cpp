@@ -38,7 +38,7 @@ std::optional<File::Key> Snapshot::getHeadKey()
 {
 	auto ref = Shit::Branch::getHeadRef();
 	if (ref) {
-		std::ifstream headFile(Shit::Path::shitDirectory + *ref);
+		std::ifstream headFile(*ref);
 		std::string line;
 		if (std::getline(headFile, line)) {
 			return std::optional(line);

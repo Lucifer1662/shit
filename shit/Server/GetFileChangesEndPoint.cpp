@@ -6,6 +6,7 @@
 #include "../Snapshot.h"
 #include "../RestUtil.h"
 #include <filesystem>
+#include <cpprest/rawptrstream.h>
 
 
 template<typename T>
@@ -14,17 +15,41 @@ static T wait_get(Concurrency::task<T> task) {
 	return task.get();
 }
 
-void putFile(ostream& fileToSend, const std::string& path) {
+template<typename T> 
+void write(Concurrency::streams::ostream& stream, const T& t) {
+	Concurrency::streams::rawptr_stream<char> s = Concurrency::streams::rawptr_stream<char>();
+	auto ss = s.open_istream((char*)&t, sizeof(T));
 
+
+	try {
+		wait_get(stream.write(ss.streambuf(), sizeof(T)));
+	}
+	catch (std::exception e) {
+		std::cout << e.what();
+	}
+	ss.close();
+}
+
+void putFile(Concurrency::streams::ostream& fileToSend, const std::string& path) {
+
+	
+	
 	auto size = path.size();
-	fileToSend.write((const char *)&size, sizeof(size_t));
-	fileToSend << path;
-	//wait_get(fileToSend.print(path));
+	write(fileToSend, size);
+	fileToSend.print(path);
+
+	/*fileToSend.write((const char *)&size, sizeof(size_t));
+	fileToSend << path;*/
 	// Open stream to input file.
 	auto taskInput = wait_get(concurrency::streams::fstream::open_istream(toUtilStr(path)));
 
-	fileToSend << std::filesystem::file_size(path);
-	fileToSend << taskInput;
+	size_t fileSize = std::filesystem::file_size(path);
+	//fileToSend.write((const char*)&fileSize, sizeof(size_t));
+
+	write(fileToSend,fileSize);
+	taskInput.read_to_end(fileToSend.streambuf());
+	
+	
 }
 
 
@@ -53,8 +78,20 @@ void GetFileChangesEndPoint::operator()(http_request request) {
 				auto snapshots = Snapshot::snapShotsUpTo(branch->head, wsTos(snapshot));
 
 				std::filesystem::remove("temp");
-				auto fileToSend = std::ofstream("temp", std::ios::binary);
+				auto fileToSend = wait_get(Concurrency::streams::fstream().open_ostream(U("temp"), std::ios_base::binary));
+					//std::ofstream("temp", std::ios::binary);
 				
+				size_t files = 2;
+				for (auto& snapshot : snapshots) {
+					files += snapshot.objects.size() + 1;
+				}
+
+				write<size_t>(fileToSend, files);
+
+				putFile(fileToSend, branch->getPath());
+				putFile(fileToSend, Shit::Path::headRelative);
+
+
 
 				for (auto& snapshot : snapshots) {
 					putFile(fileToSend, snapshot.getPath());
