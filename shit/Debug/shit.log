@@ -1,2 +1,14 @@
-﻿  File.cpp
-  shit.vcxproj -> C:\Users\lhawk\OneDrive\Projects\shit\Debug\shit.exe
+﻿  Client.cpp
+C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(120,6): warning C4552: '<<': result of expression not used
+C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(92,1): error C2664: 'Concurrency::streams::rawptr_buffer<char>::rawptr_buffer(char *,size_t,std::ios_base::openmode)': cannot convert argument 1 from 'T *' to 'char *'
+          with
+          [
+              T=size_t
+          ]
+C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(92,51): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Users\lhawk\Stuff\projects\shit\include\cpprest\rawptrstream.h(535,5): message : see declaration of 'Concurrency::streams::rawptr_buffer<char>::rawptr_buffer'
+C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(108): message : see reference to function template instantiation 'T read<size_t>(Concurrency::streams::istream &)' being compiled
+          with
+          [
+              T=size_t
+          ]

@@ -1,0 +1,111 @@
+#include "Commands.h"
+#include "Shit.h"
+#include "glob/glob.h"
+#include "Snapshot.h"
+#include "Commit.h"
+#include "Server/RemoteServer.h"
+#include "Push.h"
+#include "Host.h"
+#include "Init.h"
+#include "Clone.h"
+
+std::unordered_map<std::string, void (Shit::Command::*)()> Shit::Command::initCommands() {
+	std::unordered_map<std::string, void (Command::*)()> commands;
+	commands[std::string("add")] = &Command::add;
+	commands[std::string("checkout")] = &Command::checkout;
+	commands[std::string("clone")] = &Command::clone;
+	commands[std::string("commit")] = &Command::commit;
+	commands[std::string("branch")] = &Command::branch;
+	commands[std::string("host")] = &Command::host;
+	commands[std::string("push")] = &Command::push;
+	commands[std::string("pull")] = &Command::push;
+	commands[std::string("init")] = &Command::init;
+	return commands;
+}
+
+void Shit::Command::execute() {
+	auto commandIt = commands.find(action);
+	if (commandIt != commands.end()) {
+		auto funcP = commandIt->second;
+		(this->*funcP)();
+	}
+}
+
+void Shit::Command::init()
+{
+	Shit::Init()();
+}
+
+
+void Shit::Command::add() {
+
+	std::vector<std::string> paths;
+	for (auto& param : params) {
+		auto path = Shit::Path::workingDirectory + param;
+
+
+		glob::Glob globber(path);
+		while (globber){
+			auto path = globber.GetFileName();
+			paths.push_back(path);
+			std::cout << path << std::endl;
+			globber.Next();
+		};
+	}
+
+
+	Shit::stage(paths);
+}
+
+void Shit::Command::clone() {
+	auto c = Clone();
+	c("http://127.0.0.1:34568");
+}
+
+void Shit::Command::commit() {
+
+	std::string message;
+
+	for (size_t i = 0; i < params.size(); i++)
+	{
+		if (params[i] == "-m") {
+			if (i + 1 < params.size())
+				message = params[i + 1];
+		}
+	}
+
+	std::cout << "Starting Commit" << std::endl;
+
+	
+	 
+	auto head = Snapshot::getHeadKey();
+	std::string previous;
+	if (head)
+		previous = *head;
+
+	
+
+	Commit commit(previous, std::string(message));
+	auto snapshot = commit();
+
+	auto branch = Shit::Branch::currentBranch();
+	if (branch) {
+		branch->setSnapshot(snapshot.getKey());
+	}
+}
+
+void Shit::Command::host()
+{
+	Host host;
+	host();
+}
+
+void Shit::Command::push()
+{
+	Push push("http://127.0.0.1:34568");
+	push();
+}
+
+void Shit::Command::pull()
+{
+}

@@ -1,0 +1,97 @@
+#include "Shit.h"
+#include "Snapshot.h"
+#include "Commit.h"
+#include "WorkingDirectory.h"
+#include <filesystem>
+
+void Shit::setup() {
+	auto localPath = std::filesystem::current_path();
+
+	Shit::Path::workingDirectory = localPath.string() + "\\";
+	Shit::Path::shitDirectory = Shit::Path::workingDirectory + ".shit\\";
+	Shit::Path::staging = Shit::Path::shitDirectory + "staging";
+	Shit::Path::head = Shit::Path::shitDirectory + "head";
+
+	Shit::Path::objectsDirectory = Shit::Path::workingDirectory + Shit::Path::objectsRelative;
+	Shit::Path::snapshotDirectory = Shit::Path::workingDirectory + Shit::Path::snapShotRelative;
+	Shit::Path::branchesDirectory = Shit::Path::workingDirectory + Shit::Path::branchesRelative;
+}
+
+void Shit::stage(const std::vector<std::string>& file_paths) {
+	std::cout << "Starting Staging" << std::endl;
+	std::fstream staging(Shit::Path::staging,
+		std::fstream::in | std::fstream::out | std::fstream::app);
+
+	/*std::vector<std::string> file_paths = {
+	"Sorting1.c",
+	"BigNum.c",
+	"src\\Cube.c",
+	"Sorting.c"
+	};*/
+
+	Add add = Add(staging);
+	add(file_paths);
+	staging.close();
+
+	for (size_t i = 0; i < file_paths.size(); i++)
+	{
+		std::cout << '\t' << file_paths[i] << std::endl;
+	}
+	std::cout << "Staged" << std::endl << std::endl;
+}
+
+void Shit::commit(const std::string& message) {
+	std::cout << "Starting Commit" << std::endl;
+
+
+	std::fstream staging(Shit::Path::staging,
+		std::fstream::in | std::fstream::out);
+
+	auto head = Snapshot::getHeadKey();
+	std::string previous;
+	if (head)
+		previous = *head;
+
+	Commit commit(previous, message);
+	auto snapshot = commit();
+
+	staging.close();
+}
+
+void Shit::changeWorkingDirectory(const std::string& branchName) {
+
+	if (!Snapshot::anyUntrackedChangesToHead()) {
+		auto branch = Branch::getBranch(branchName);
+		if (branch) {
+			auto snapshot = Snapshot::fromKey(branch->head);
+			WorkingDirectory wd;
+			wd.PlaceSnapshotIn(snapshot);
+		}
+		else {
+			std::cout << "No branch exists" << std::endl;
+		}
+	}
+	else {
+		std::cout << "There are untracked changes" << std::endl;
+	}
+}
+
+void Shit::changeWorkingDirectoryToHead() {
+	if (!Snapshot::anyUntrackedChangesToHead()) {
+		WorkingDirectory wd;
+		wd.PlaceSnapshotIn(Snapshot::getHead().value());
+	}
+	else {
+		std::cout << "There are untracked changes" << std::endl;
+	}
+}
+
+void Shit::createBranch(const std::string& branchName) {
+	auto head = Snapshot::getHead();
+	if (head) {
+		Branch::createBranch(branchName, head->getKey());
+	}
+	else {
+		Branch::createBranch(branchName, "");
+	}
+}

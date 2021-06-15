@@ -1,0 +1,12 @@
+﻿  Source.cpp
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\Order.h(17,14): warning C4099: 'StockTrading::Order': type name first seen using 'struct' now seen using 'class'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\Order.h(17): message : see declaration of 'StockTrading::Order'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\StockMarketOrders.h(8,14): warning C4099: 'StockTrading::Order': type name first seen using 'class' now seen using 'struct'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\Order.h(17): message : see declaration of 'StockTrading::Order'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\OrderFactory.h(6,14): warning C4099: 'StockTrading::Order': type name first seen using 'class' now seen using 'struct'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\StockMarketOrders.h(8): message : see declaration of 'StockTrading::Order'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\StockTradingFascade.h(11,14): warning C4099: 'StockTrading::Order': type name first seen using 'class' now seen using 'struct'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\OrderFactory.h(6): message : see declaration of 'StockTrading::Order'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\StockTradingFascade.h(12,18): warning C4099: 'StockTrading::OrderData': type name first seen using 'class' now seen using 'struct'
+C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\StockTrading\OrderData.h(7): message : see declaration of 'StockTrading::OrderData'
+  LukeRest.vcxproj -> C:\Users\lhawk\Stuff\projects\StockTrade\stock-back-end\Debug\LukeRest.exe

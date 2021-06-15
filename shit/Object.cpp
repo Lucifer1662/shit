@@ -16,7 +16,7 @@ Object::Object(File file): file(file)
 }
 
 std::string Object::getPath() const {
-	return Shit::Path::objectsDirectory + file.key;
+	return Shit::Path::objectsRelative + file.key;
 }
 
 File::Key Object::getKey() const

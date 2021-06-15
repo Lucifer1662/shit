@@ -88,13 +88,16 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/debug/x86/;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libssl.lib;libcrypto.lib;brotlicommon.lib;brotlidec.lib;brotlienc.lib;cpprest_2_10d.lib;zlibd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>rm -f test1/.shit</Command>
+      <Command>echo "hello" &amp; Rmdir /s /q test1/.shit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -110,7 +113,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>rm -f test1/.shit</Command>
+      <Command>Rmdir /s /q test1/.shit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,21 +158,60 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="add.cpp" />
+    <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="Client\Client.cpp" />
+    <ClCompile Include="Client\Client.h" />
+    <ClCompile Include="Clone.cpp" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Commit.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="Server\GetFileChangesEndPoint.cpp" />
+    <ClCompile Include="glob\glob_win32.cpp" />
+    <ClCompile Include="Host.cpp" />
+    <ClCompile Include="Init.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Push.cpp" />
+    <ClCompile Include="Server\ApiMethodEndPoint.cpp" />
+    <ClCompile Include="Server\ApiRest.cpp" />
+    <ClCompile Include="Server\CORS.cpp" />
+    <ClCompile Include="Server\GetEndPoint.cpp" />
+    <ClCompile Include="Server\Handler.cpp" />
+    <ClCompile Include="Server\PutEndPoint.cpp" />
+    <ClCompile Include="Server\RemoteServer.cpp" />
+    <ClCompile Include="Server\strutil.cpp" />
     <ClCompile Include="sha1.cpp" />
+    <ClCompile Include="Shit.cpp" />
     <ClCompile Include="Snapshot.cpp" />
     <ClCompile Include="WorkingDirectory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add.h" />
+    <ClInclude Include="Branch.h" />
+    <ClInclude Include="Clone.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="Commit.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="RestUtil.h" />
+    <ClInclude Include="Server\GetFileChangesEndPoint.h" />
+    <ClInclude Include="glob\glob.h" />
+    <ClInclude Include="glob\glob_win32.h" />
+    <ClInclude Include="Host.h" />
+    <ClInclude Include="Init.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="Push.h" />
+    <ClInclude Include="Server\ApiMethodEndPoint.h" />
+    <ClInclude Include="Server\ApiRest.h" />
+    <ClInclude Include="Server\CORS.h" />
+    <ClInclude Include="Server\GetEndPoint.h" />
+    <ClInclude Include="Server\handler.h" />
+    <ClInclude Include="Server\PutEndPoint.h" />
+    <ClInclude Include="Server\RemoteServer.h" />
+    <ClInclude Include="Server\stdfx.h" />
+    <ClInclude Include="Server\strutil.h" />
     <ClInclude Include="sha1.h" />
+    <ClInclude Include="Shit.h" />
     <ClInclude Include="Snapshot.h" />
     <ClInclude Include="WorkingDirectory.h" />
   </ItemGroup>

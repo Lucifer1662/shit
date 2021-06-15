@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{4649e1e4-62f8-4389-9eee-2f0b4bf81df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{b1856ba7-f8d2-4d05-a006-542ec02387d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +45,63 @@
     <ClCompile Include="WorkingDirectory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Branch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glob\glob_win32.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\ApiMethodEndPoint.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\ApiRest.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\CORS.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Handler.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\strutil.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\PutEndPoint.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GetEndPoint.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\RemoteServer.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Push.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Client.h">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Client.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Host.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Init.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GetFileChangesEndPoint.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Clone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add.h">
@@ -63,6 +126,66 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Branch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glob\glob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glob\glob_win32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\ApiMethodEndPoint.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\ApiRest.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\CORS.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\handler.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\stdfx.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\strutil.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\PutEndPoint.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GetEndPoint.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\RemoteServer.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Push.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Host.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Init.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GetFileChangesEndPoint.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="RestUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Clone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
