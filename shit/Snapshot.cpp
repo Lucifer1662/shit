@@ -21,22 +21,23 @@ std::string Snapshot::toContent()
 
 std::string Snapshot::getPath()
 {
-	return Shit::Path::snapShotRelative + getKey();
+	return shit.snapShotRelative + getKey();
 }
 
-Snapshot::Snapshot(std::vector<std::pair<Object, Snapshot::Path>> objects, File::Key previous)
+Snapshot::Snapshot(Shit& shit, std::vector<std::pair<Object, Snapshot::Path>> objects, File::Key previous)
 	: objects(objects),
 	previous(previous),
-	file(File::createFileFromContent(type, toContent())) {
+	shit(shit),
+	file(File::createFileFromContent(shit, type, toContent())) {
 }
 
 inline File::Key Snapshot::getKey() { return file.key; }
 
 
 
-std::optional<File::Key> Snapshot::getHeadKey()
+std::optional<File::Key> Snapshot::getHeadKey(Shit& shit)
 {
-	auto ref = Shit::Branch::getHeadRef();
+	auto ref = Branch::getHeadRef(shit);
 	if (ref) {
 		std::ifstream headFile(*ref);
 		std::string line;
@@ -47,10 +48,10 @@ std::optional<File::Key> Snapshot::getHeadKey()
 	return std::optional<File::Key>();
 }
 
-std::optional<Snapshot> Snapshot::getHead() {
-	auto key = getHeadKey();
+std::optional<Snapshot> Snapshot::getHead(Shit& shit) {
+	auto key = getHeadKey(shit);
 	if (key.has_value()) {
-		return fromKey(key.value());
+		return fromKey(shit, key.value());
 	}
 	return std::optional<Snapshot>();
 
@@ -58,13 +59,13 @@ std::optional<Snapshot> Snapshot::getHead() {
 
 
 
-Snapshot Snapshot::fromKey(std::string key)
+Snapshot Snapshot::fromKey(Shit& shit, std::string key)
 {
 	if (key == std::string("")) {
-		return Snapshot();
+		return Snapshot(shit);
 	}
 
-	std::ifstream f(Shit::Path::snapshotDirectory + key);
+	std::ifstream f(shit.snapshotDirectory + key);
 
 	std::string previous;
 	std::getline(f, previous);
@@ -76,12 +77,12 @@ Snapshot Snapshot::fromKey(std::string key)
 	}
 	f.close();
 
-	return Snapshot(objects, previous);
+	return Snapshot(shit, objects, previous);
 }
 
-bool Snapshot::snapshotExists(std::string key)
+bool Snapshot::snapshotExists(Shit& shit, std::string key)
 {
-	return std::filesystem::exists(Shit::Path::snapshotDirectory + key);
+	return std::filesystem::exists(shit.snapshotDirectory + key);
 }
 
 
@@ -95,12 +96,9 @@ std::pair<Object, Snapshot::Path> Snapshot::getObjectAndPathFromString(std::stri
 
 
 
-Snapshot Snapshot::createFromFile(Path path)
+Snapshot Snapshot::createFromFile(Shit& shit,Path path)
 {
-
-
-
-	return Snapshot();
+	return Snapshot(shit);
 }
 
 bool Snapshot::anyUntrackedChangesTo(const Snapshot& snapshot)
@@ -119,25 +117,25 @@ bool Snapshot::anyUntrackedChangesTo(const Snapshot& snapshot)
 	return false;
 }
 
-bool Snapshot::anyUntrackedChangesToHead()
+bool Snapshot::anyUntrackedChangesToHead(Shit& shit)
 {
-	auto head = Snapshot::getHead();
+	auto head = Snapshot::getHead(shit);
 	if (head.has_value()) {
 		return anyUntrackedChangesTo(head.value());
 	}
 	return true;
 }
 
-std::vector<Snapshot> Snapshot::snapShotsUpTo(File::Key snapshot, File::Key oldSnapshot)
+std::vector<Snapshot> Snapshot::snapShotsUpTo(Shit& shit, File::Key snapshot, File::Key oldSnapshot)
 {
-	if (!Snapshot::snapshotExists(snapshot)) {
+	if (!Snapshot::snapshotExists(shit, snapshot)) {
 		return {};
 	}
 
 	std::vector<Snapshot> snapshots;
-	if (Snapshot::snapshotExists(oldSnapshot) || oldSnapshot == "") {
+	if (Snapshot::snapshotExists(shit, oldSnapshot) || oldSnapshot == "") {
 		while (snapshot != oldSnapshot) {
-			snapshots.push_back(Snapshot::fromKey(snapshot));
+			snapshots.push_back(Snapshot::fromKey(shit, snapshot));
 
 			snapshot = snapshots.back().previous;
 		}

@@ -3,14 +3,12 @@
 #include "Path.h"
 #include <fstream>
 
-namespace Shit {
-	void Init::operator()() {
-		std::filesystem::create_directory(Shit::Path::shitDirectory);
-		std::filesystem::create_directory(Shit::Path::branchesDirectory);
-		std::filesystem::create_directory(Shit::Path::objectsDirectory);
-		std::filesystem::create_directory(Shit::Path::snapshotDirectory);
-		std::ofstream head(Shit::Path::head);
-		head << Shit::Path::branchesRelative + "master";
-		head.close();
-	}
+void Init::operator()() {
+	std::filesystem::create_directory(shit.shitDirectory);
+	std::filesystem::create_directory(shit.branchesDirectory);
+	std::filesystem::create_directory(shit.objectsDirectory);
+	std::filesystem::create_directory(shit.snapshotDirectory);
+	std::ofstream head(shit.head);
+	head << shit.branchesRelative + "master";
+	head.close();
 }

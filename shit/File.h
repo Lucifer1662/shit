@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <optional>
+#include "Shit.h"
 
 class File{
 public:
@@ -10,15 +11,16 @@ public:
 private:
 	
 	std::string type;
-	
+	Shit& shit;
 public:
-	File(std::string type, Key key);
+	
+	File(Shit& shit, std::string type, Key key);
 	File(const File& file);
 	const Key key;
 	std::string getPath();
-	static File createFileFromContent(std::string type, std::string content);
-	static File createFileFromPath(std::string type, std::string path);
-	static Key getKeyFromFile(std::string path);
+	static File createFileFromContent(Shit& shit, std::string type, std::string content);
+	static File createFileFromPath(Shit& shit, std::string type, std::string path);
+	static Key getKeyFromFile(Shit& shit, std::string path);
 
 };
 

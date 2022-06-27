@@ -1,14 +1,150 @@
-﻿  Client.cpp
-C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(120,6): warning C4552: '<<': result of expression not used
-C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(92,1): error C2664: 'Concurrency::streams::rawptr_buffer<char>::rawptr_buffer(char *,size_t,std::ios_base::openmode)': cannot convert argument 1 from 'T *' to 'char *'
+﻿  Branch.cpp
+  Client.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2395,23): warning C4244: 'argument': conversion from 'wchar_t' to 'const _Elem', possible loss of data
           with
           [
-              T=size_t
+              _Elem=char
           ]
-C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(92,51): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
-C:\Users\lhawk\Stuff\projects\shit\include\cpprest\rawptrstream.h(535,5): message : see declaration of 'Concurrency::streams::rawptr_buffer<char>::rawptr_buffer'
-C:\Users\lhawk\Stuff\projects\shit\shit\Client\Client.cpp(108): message : see reference to function template instantiation 'T read<size_t>(Concurrency::streams::istream &)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2406): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<wchar_t*>(_Iter,const _Iter,std::input_iterator_tag)' being compiled
           with
           [
-              T=size_t
+              _Iter=wchar_t *
           ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2406): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<wchar_t*>(_Iter,const _Iter,std::input_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2386): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<wchar_t*>(const _Iter,const _Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2386): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<wchar_t*>(const _Iter,const _Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=wchar_t *
+          ]
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Client\Client.cpp(41): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Client\Client.cpp(41): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+  Client.h
+  Clone.cpp
+  Commands.cpp
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Commands.cpp(39,7): error C2365: 'shit': redefinition; previous definition was 'data variable'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Commands.cpp(38): message : see declaration of 'shit'
+  Commit.cpp
+  File.cpp
+  Host.cpp
+  Init.cpp
+  Object.cpp
+  Push.cpp
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(27,83): error C2660: 'Snapshot::snapShotsUpTo': function does not take 2 arguments
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Snapshot.h(55,31): message : see declaration of 'Snapshot::snapShotsUpTo'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,34): error C3536: 'snapshots': cannot be used before it is initialized
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,25): error C2672: 'begin': no matching overloaded function found
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): error C2893: Failed to specialize function template 'unknown-type std::begin(_Container &)'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xutility(1961): message : see declaration of 'std::begin'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): message : With the following template arguments:
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): message : '_Container=int'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): error C2784: 'const _Elem *std::begin(std::initializer_list<_Elem>) noexcept': could not deduce template argument for 'std::initializer_list<_Elem>' from 'int'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\initializer_list(57): message : see declaration of 'std::begin'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,25): error C2672: 'end': no matching overloaded function found
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): error C2893: Failed to specialize function template 'unknown-type std::end(_Container &)'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xutility(1971): message : see declaration of 'std::end'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): message : With the following template arguments:
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): message : '_Container=int'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): error C2784: 'const _Elem *std::end(std::initializer_list<_Elem>) noexcept': could not deduce template argument for 'std::initializer_list<_Elem>' from 'int'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\initializer_list(63): message : see declaration of 'std::end'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): error C3536: '<begin>$L0': cannot be used before it is initialized
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,36): error C3536: '<end>$L0': cannot be used before it is initialized
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(28,34): error C2100: illegal indirection
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(29,34): error C2660: 'put': function does not take 1 arguments
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Client\Client.h(5,6): message : see declaration of 'put'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(31,40): error C2530: 'object': references must be initialized
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(31,40): error C3531: 'object': a symbol whose type contains 'auto' must have an initializer
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(31,22): error C2143: syntax error: missing ';' before ':'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(31,40): error C2143: syntax error: missing ';' before ')'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(33,25): error C3536: 'objectId': cannot be used before it is initialized
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Push.cpp(33,35): error C2660: 'put': function does not take 1 arguments
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Client\Client.h(5,6): message : see declaration of 'put'
+  ApiMethodEndPoint.cpp
+  ApiRest.cpp
+  CORS.cpp
+  GetEndPoint.cpp
+  GetFileChangesEndPoint.cpp
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Server\GetFileChangesEndPoint.cpp(46,18): warning C4244: 'initializing': conversion from 'uintmax_t' to 'size_t', possible loss of data
+  Handler.cpp
+  PutEndPoint.cpp
+  RemoteServer.cpp
+  strutil.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2395,23): warning C4244: 'argument': conversion from 'const wchar_t' to 'const _Elem', possible loss of data
+          with
+          [
+              _Elem=char
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2406): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<const wchar_t*>(_Iter,const _Iter,std::input_iterator_tag)' being compiled
+          with
+          [
+              _Iter=const wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2406): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<const wchar_t*>(_Iter,const _Iter,std::input_iterator_tag)' being compiled
+          with
+          [
+              _Iter=const wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2386): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<const wchar_t*>(const _Iter,const _Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=const wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\xstring(2386): message : see reference to function template instantiation 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<const wchar_t*>(const _Iter,const _Iter,std::forward_iterator_tag)' being compiled
+          with
+          [
+              _Iter=const wchar_t *
+          ]
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Server\strutil.cpp(14): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Server\strutil.cpp(14): message : see reference to function template instantiation 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+  Generating Code...
+  Compiling...
+  Shit.cpp
+  Snapshot.cpp
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Snapshot.cpp(94,34): error C2440: '<function-style-cast>': cannot convert from 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' to 'Object'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Snapshot.cpp(94,34): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Snapshot.cpp(94,24): error C2064: term does not evaluate to a function taking 1 arguments
+C:\Users\lhawk\OneDrive\Projects\shit\shit\Snapshot.cpp(94,14): error C2672: 'std::make_pair': no matching overloaded function found
+  WorkingDirectory.cpp
+C:\Users\lhawk\OneDrive\Projects\shit\shit\WorkingDirectory.cpp(61,18): error C2597: illegal reference to non-static member 'WorkingDirectory::shit'
+C:\Users\lhawk\OneDrive\Projects\shit\shit\WorkingDirectory.h(8): message : see declaration of 'WorkingDirectory::shit'
+  add.cpp
+  glob_win32.cpp
+  main.cpp
+  sha1.cpp
+C:\Users\lhawk\OneDrive\Projects\shit\shit\sha1.cpp(74,15): warning C4309: 'argument': truncation of constant value
+C:\Users\lhawk\OneDrive\Projects\shit\shit\sha1.cpp(94,29): warning C4244: '=': conversion from 'SHA1::uint64' to 'SHA1::uint32', possible loss of data
+C:\Users\lhawk\OneDrive\Projects\shit\shit\sha1.cpp(262,29): warning C4244: 'argument': conversion from 'std::streamsize' to 'const unsigned int', possible loss of data
+  Generating Code...

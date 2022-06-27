@@ -9,7 +9,9 @@
 #include "Init.h"
 #include "Clone.h"
 
-std::unordered_map<std::string, void (Shit::Command::*)()> Shit::Command::initCommands() {
+
+
+std::unordered_map<std::string, void (Command::*)()> Command::initCommands() {
 	std::unordered_map<std::string, void (Command::*)()> commands;
 	commands[std::string("add")] = &Command::add;
 	commands[std::string("checkout")] = &Command::checkout;
@@ -23,7 +25,7 @@ std::unordered_map<std::string, void (Shit::Command::*)()> Shit::Command::initCo
 	return commands;
 }
 
-void Shit::Command::execute() {
+void Command::execute() {
 	auto commandIt = commands.find(action);
 	if (commandIt != commands.end()) {
 		auto funcP = commandIt->second;
@@ -31,17 +33,20 @@ void Shit::Command::execute() {
 	}
 }
 
-void Shit::Command::init()
+void Command::init()
 {
-	Shit::Init()();
+	auto shit = Shit();
+	Init(shit)();
+
 }
 
 
-void Shit::Command::add() {
-
+void Command::add() {
+	
+	Shit shit = Shit();
 	std::vector<std::string> paths;
 	for (auto& param : params) {
-		auto path = Shit::Path::workingDirectory + param;
+		auto path = shit.workingDirectory + param;
 
 
 		glob::Glob globber(path);
@@ -54,15 +59,15 @@ void Shit::Command::add() {
 	}
 
 
-	Shit::stage(paths);
+	stage(paths);
 }
 
-void Shit::Command::clone() {
+void Command::clone() {
 	auto c = Clone();
 	c("http://127.0.0.1:34568");
 }
 
-void Shit::Command::commit() {
+void Command::commit() {
 
 	std::string message;
 
@@ -77,35 +82,35 @@ void Shit::Command::commit() {
 	std::cout << "Starting Commit" << std::endl;
 
 	
-	 
-	auto head = Snapshot::getHeadKey();
+	Shit shit = Shit();
+	auto head = Snapshot::getHeadKey(shit);
 	std::string previous;
 	if (head)
 		previous = *head;
 
 	
 
-	Commit commit(previous, std::string(message));
+	Commit commit(shit, previous, std::string(message));
 	auto snapshot = commit();
-
-	auto branch = Shit::Branch::currentBranch();
+	auto branch = Branch::currentBranch(shit);
 	if (branch) {
 		branch->setSnapshot(snapshot.getKey());
 	}
 }
 
-void Shit::Command::host()
+void Command::host()
 {
-	Host host;
+	Shit shit = Shit();
+	Host host = Host(shit);
 	host();
 }
 
-void Shit::Command::push()
+void Command::push()
 {
 	Push push("http://127.0.0.1:34568");
 	push();
 }
 
-void Shit::Command::pull()
+void Command::pull()
 {
 }

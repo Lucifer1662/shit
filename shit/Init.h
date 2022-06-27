@@ -1,11 +1,12 @@
 #pragma once
+#include "Shit.h"
 
-namespace Shit {
-	class Init
-	{
 
-	public:
-		void operator()();
-	};
-}
+class Init
+{
+	Shit& shit;
+public:
+	Init(Shit& shit) :shit(shit) {}
+	void operator()();
+};
 

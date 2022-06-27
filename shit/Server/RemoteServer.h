@@ -2,6 +2,4 @@
 #include "stdfx.h"
 
 
-namespace Shit {
-	void startServer();
-}
+void startServer();

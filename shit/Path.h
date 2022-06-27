@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-namespace Shit {
-	namespace Path {
+
+	/*namespace Path {
 		inline std::string workingDirectory;
 		inline std::string shitDirectory;
 		inline std::string staging;
@@ -14,5 +14,5 @@ namespace Shit {
 		inline std::string snapShotRelative = ".shit\\snapshots\\";
 		inline std::string branchesDirectory;
 		inline std::string branchesRelative = ".shit\\branches\\";
-	}
-}
+	}*/
+

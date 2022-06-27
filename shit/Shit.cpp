@@ -3,23 +3,20 @@
 #include "Commit.h"
 #include "WorkingDirectory.h"
 #include <filesystem>
+#include "Path.h"
+#include "Branch.h"
+#include "add.h"
 
-void Shit::setup() {
-	auto localPath = std::filesystem::current_path();
+void setup() {
 
-	Shit::Path::workingDirectory = localPath.string() + "\\";
-	Shit::Path::shitDirectory = Shit::Path::workingDirectory + ".shit\\";
-	Shit::Path::staging = Shit::Path::shitDirectory + "staging";
-	Shit::Path::head = Shit::Path::shitDirectory + "head";
-
-	Shit::Path::objectsDirectory = Shit::Path::workingDirectory + Shit::Path::objectsRelative;
-	Shit::Path::snapshotDirectory = Shit::Path::workingDirectory + Shit::Path::snapShotRelative;
-	Shit::Path::branchesDirectory = Shit::Path::workingDirectory + Shit::Path::branchesRelative;
 }
 
-void Shit::stage(const std::vector<std::string>& file_paths) {
+void stage(const std::vector<std::string>& file_paths) {
 	std::cout << "Starting Staging" << std::endl;
-	std::fstream staging(Shit::Path::staging,
+
+	Shit shit = Shit();
+
+	std::fstream staging(shit.staging,
 		std::fstream::in | std::fstream::out | std::fstream::app);
 
 	/*std::vector<std::string> file_paths = {
@@ -40,31 +37,32 @@ void Shit::stage(const std::vector<std::string>& file_paths) {
 	std::cout << "Staged" << std::endl << std::endl;
 }
 
-void Shit::commit(const std::string& message) {
+void commit(const std::string& message) {
 	std::cout << "Starting Commit" << std::endl;
 
+	Shit shit = Shit();
 
-	std::fstream staging(Shit::Path::staging,
+	std::fstream staging(shit.staging,
 		std::fstream::in | std::fstream::out);
 
-	auto head = Snapshot::getHeadKey();
+	auto head = Snapshot::getHeadKey(shit);
 	std::string previous;
 	if (head)
 		previous = *head;
 
-	Commit commit(previous, message);
+	Commit commit(shit, previous, message);
 	auto snapshot = commit();
 
 	staging.close();
 }
 
-void Shit::changeWorkingDirectory(const std::string& branchName) {
-
-	if (!Snapshot::anyUntrackedChangesToHead()) {
-		auto branch = Branch::getBranch(branchName);
+void changeWorkingDirectory(const std::string& branchName) {
+	Shit shit = Shit();
+	if (!Snapshot::anyUntrackedChangesToHead(shit)) {
+		auto branch = Branch::getBranch(shit, branchName);
 		if (branch) {
-			auto snapshot = Snapshot::fromKey(branch->head);
-			WorkingDirectory wd;
+			auto snapshot = Snapshot::fromKey(shit, branch->head);
+			WorkingDirectory wd(shit);
 			wd.PlaceSnapshotIn(snapshot);
 		}
 		else {
@@ -76,22 +74,36 @@ void Shit::changeWorkingDirectory(const std::string& branchName) {
 	}
 }
 
-void Shit::changeWorkingDirectoryToHead() {
-	if (!Snapshot::anyUntrackedChangesToHead()) {
-		WorkingDirectory wd;
-		wd.PlaceSnapshotIn(Snapshot::getHead().value());
+void changeWorkingDirectoryToHead() {
+	Shit shit = Shit();
+	if (!Snapshot::anyUntrackedChangesToHead(shit)) {
+		WorkingDirectory wd(shit);
+		wd.PlaceSnapshotIn(Snapshot::getHead(shit).value());
 	}
 	else {
 		std::cout << "There are untracked changes" << std::endl;
 	}
 }
 
-void Shit::createBranch(const std::string& branchName) {
-	auto head = Snapshot::getHead();
+void createBranch(Shit& shit, const std::string& branchName) {
+	auto head = Snapshot::getHead(shit);
 	if (head) {
-		Branch::createBranch(branchName, head->getKey());
+		Branch::createBranch(shit, branchName, head->getKey());
 	}
 	else {
-		Branch::createBranch(branchName, "");
+		Branch::createBranch(shit, branchName, "");
 	}
+}
+
+inline Shit::Shit() {
+	auto localPath = std::filesystem::current_path();
+
+	workingDirectory = localPath.string() + "\\";
+	shitDirectory = workingDirectory + ".shit\\";
+	staging = shitDirectory + "staging";
+	head = shitDirectory + "head";
+
+	objectsDirectory = workingDirectory + objectsRelative;
+	snapshotDirectory = workingDirectory + snapShotRelative;
+	branchesDirectory = workingDirectory + branchesRelative;
 }

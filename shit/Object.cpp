@@ -6,17 +6,17 @@
 #include "Path.h"
 
 
-Object::Object(File::Key key): file(Object::type, key)
+Object::Object(Shit& shit, File::Key key): file(shit, Object::type, key), shit(shit)
 {
 }
 
-Object::Object(File file): file(file)
+Object::Object(Shit& shit, File file): file(file), shit(shit)
 {
 	
 }
 
 std::string Object::getPath() const {
-	return Shit::Path::objectsRelative + file.key;
+	return shit.objectsRelative + file.key;
 }
 
 File::Key Object::getKey() const
@@ -25,9 +25,9 @@ File::Key Object::getKey() const
 }
 
 
-Object Object::createFromPath(std::string path)
+Object Object::createFromPath(Shit& shit, std::string path)
 {
-	return Object(File::createFileFromPath(Object::type, path));
+	return Object(shit, File::createFileFromPath(shit, Object::type, path));
 }
 
 

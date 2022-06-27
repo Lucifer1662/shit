@@ -5,45 +5,46 @@
 #include <optional>
 #include "File.h"
 #include "Snapshot.h"
+#include "Shit.h"
 
-namespace Shit {
-	class Branch
-	{
-	public:
-		using Head = std::string;
-		using Name = std::string;
+class Branch
+{
+	Shit& shit;
+public:
+	using Head = std::string;
+	using Name = std::string;
 
-	private:
-		Branch(Name name, Head head) : name(name), head(head) {}
+private:
+	Branch(Shit& shit, Name name, Head head) : shit(shit), name(name), head(head) {}
 
-	public:
-		const Name name;
-		const Head head;
+public:
+	const Name name;
+	const Head head;
 
-		std::string getPath();
+	std::string getPath();
 
-		static Branch createBranch(Name name, Head head);
-
-	
-
-
-		static std::optional<File::Key> getHeadRef();
+	static Branch createBranch(Shit& shit, Name name, Head head);
 
 
-		static std::optional<Branch> getBranchFromRef(std::string ref);
-
-		static std::optional<Branch> getBranch(Name name);
 
 
-		static std::optional<Branch> currentBranch();
+	static std::optional<File::Key> getHeadRef(Shit& shit);
 
-		void setHead();
 
-		void setSnapshot(File::Key key);
-		
+	static std::optional<Branch> getBranchFromRef(Shit& shit, std::string ref);
 
-		
+	static std::optional<Branch> getBranch(Shit& shit, Name name);
 
-	};
-}
+
+	static std::optional<Branch> currentBranch(Shit& shit);
+
+	void setHead();
+
+	void setSnapshot(File::Key key);
+
+
+
+
+};
+
 

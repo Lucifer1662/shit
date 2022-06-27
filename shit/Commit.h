@@ -5,8 +5,9 @@ class Commit
 {
 	std::string message;
 	File::Key previous;
+	Shit& shit;
 public:
-	Commit(File::Key previous, std::string message);
+	Commit(Shit& shit, File::Key previous, std::string message);
 	Snapshot operator()();
 
 };

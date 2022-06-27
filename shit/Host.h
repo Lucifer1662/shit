@@ -2,17 +2,22 @@
 #include "Path.h"
 #include <filesystem>
 #include "Server/RemoteServer.h"
+#include "Shit.h"
 
-namespace Shit {
-	class Host
+class Host
+{
+	Shit& shit;
+
+	
+
+public:
+	Host(Shit& shit) : shit(shit) {}
+	void operator()()
 	{
-	public:
-		void operator()()
-		{
-			std::cout << Shit::Path::objectsDirectory << std::endl;
-			std::filesystem::create_directories(Shit::Path::objectsDirectory);
-			startServer();
-		}
-	};
-}
+		std::cout << shit.objectsDirectory << std::endl;
+		std::filesystem::create_directories(shit.objectsDirectory);
+		startServer();
+	}
+};
+
 

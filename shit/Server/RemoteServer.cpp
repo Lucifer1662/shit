@@ -10,71 +10,72 @@
 #include "PutEndPoint.h"
 #include "GetFileChangesEndPoint.h"
 #include <mutex>
+#include "../Shit.h"
 
-namespace Shit {
-
-
-	void on_initialize(const string_t& address)
-	{
-
-		uri_builder uri(address);
+Shit shit;
 
 
-		auto addr = uri.to_uri().to_string();
-		apiHandler = std::make_unique<handler>(addr);
+void on_initialize(const string_t& address)
+{
 
-		apiHandler->addHandlePost(U("/put"), PutEndPoint());
-		apiHandler->addHandleGet(U("/get"), GetEndPoint());
-		apiHandler->addHandleGet(U("/getChanges"), GetFileChangesEndPoint());
-		apiHandler->open().wait();
+	uri_builder uri(address);
 
 
+	auto addr = uri.to_uri().to_string();
+	apiHandler = std::make_unique<handler>(addr);
 
-		ucout << utility::string_t(U("Listening for requests at: ")) << addr << std::endl;
-
-		return;
-	}
-
-	void on_shutdown(int d = 0)
-	{
-		apiHandler->close().wait();
-	}
-
-	std::mutex keepOpen;
+	
+	apiHandler->addHandlePost(U("/put"), PutEndPoint());
+	apiHandler->addHandleGet(U("/get"), GetEndPoint());
+	apiHandler->addHandleGet(U("/getChanges"), GetFileChangesEndPoint(shit));
+	apiHandler->open().wait();
 
 
 
+	ucout << utility::string_t(U("Listening for requests at: ")) << addr << std::endl;
 
-	void startServer() {
-		utility::string_t port = U("34568");
+	return;
+}
+
+void on_shutdown(int d = 0)
+{
+	apiHandler->close().wait();
+}
+
+std::mutex keepOpen;
+
+
+
+
+void startServer() {
+	utility::string_t port = U("34568");
 
 #ifdef _WIN32
-		utility::string_t address = U("http://127.0.0.1:");
+	utility::string_t address = U("http://127.0.0.1:");
 #else
-		utility::string_t address = U("http://0.0.0.0:");
+	utility::string_t address = U("http://0.0.0.0:");
 #endif
 
 
-		address.append(port);
+	address.append(port);
 
-		on_initialize(address);
-		std::cout << "Press ENTER to exit." << std::endl;
+	on_initialize(address);
+	std::cout << "Press ENTER to exit." << std::endl;
 
 
 
 
 #ifdef _WIN32
-		std::string line;
-		std::getline(std::cin, line);
-		on_shutdown();
+	std::string line;
+	std::getline(std::cin, line);
+	on_shutdown();
 #else
-		while (true) {
-			sleep(100000);
-		}
-		std::signal(SIGTERM, on_shutdown);
-		std::signal(SIGKILL, on_shutdown);
+	while (true) {
+		sleep(100000);
+	}
+	std::signal(SIGTERM, on_shutdown);
+	std::signal(SIGKILL, on_shutdown);
 #endif
 
 
-	}
 }

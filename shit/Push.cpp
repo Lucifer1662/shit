@@ -2,6 +2,8 @@
 #include "Shit.h"
 #include <filesystem>
 #include "Client/Client.h";
+#include "Branch.h"
+#include "Snapshot.h"
 
 Push::Push(std::string remote) :remote(remote)
 {
@@ -9,9 +11,10 @@ Push::Push(std::string remote) :remote(remote)
 
 void Push::operator()()
 {
+	Shit shit = Shit();
 	//get the head of remote of 
-	auto headRef = Shit::Branch::getHeadRef();
-	auto branch = Shit::Branch::currentBranch();
+	auto headRef = Branch::getHeadRef(shit);
+	auto branch = Branch::currentBranch(shit);
 
 	if (headRef) {
 

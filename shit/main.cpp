@@ -16,14 +16,14 @@
 
 int main(int argn, const char** argv) {
 
-	Shit::setup();
+	setup();
 
 
 	
 
 
 	{
-		Shit::Command command(argv[1], argv + 2, argn - 2);
+		Command command(argv[1], argv + 2, argn - 2);
 		command.execute();
 	}
 
@@ -32,7 +32,7 @@ int main(int argn, const char** argv) {
 		const char* t[2] = { "d", "host" };
 		int n = 2;
 
-		Shit::Command command(t[1], t + 2, n - 2);
+		Command command(t[1], t + 2, n - 2);
 		command.execute();
 	}
 
@@ -54,7 +54,7 @@ int main(int argn, const char** argv) {
 	}*/
 
 	//std::filesystem::remove_all(Shit::Path::shitDirectory);
-	std::filesystem::create_directory(Shit::Path::shitDirectory);
+	
 	
 	
 	
@@ -69,7 +69,7 @@ int main(int argn, const char** argv) {
 
 	
 
-	{
+	/*{
 		WorkingDirectory wd;
 		if (!Snapshot::anyUntrackedChangesToHead()) {
 			auto head = Snapshot::getHead();
@@ -79,6 +79,6 @@ int main(int argn, const char** argv) {
 		}
 		else
 			std::cout << "There are untracked changes" << std::endl;
-	}
+	}*/
 	return 0;
 }

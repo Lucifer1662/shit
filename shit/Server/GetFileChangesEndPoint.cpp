@@ -73,9 +73,9 @@ void GetFileChangesEndPoint::operator()(http_request request) {
 
 		try {
 			std::cout << "Getting changes" << std::endl;
-			auto branch = Shit::Branch::getBranch(wsTos(branchName));
+			auto branch = Branch::getBranch(shit, wsTos(branchName));
 			if (branch) {
-				auto snapshots = Snapshot::snapShotsUpTo(branch->head, wsTos(snapshot));
+				auto snapshots = Snapshot::snapShotsUpTo(shit, branch->head, wsTos(snapshot));
 
 				std::filesystem::remove("temp");
 				auto fileToSend = wait_get(Concurrency::streams::fstream().open_ostream(U("temp"), std::ios_base::binary));
@@ -89,7 +89,7 @@ void GetFileChangesEndPoint::operator()(http_request request) {
 				write<size_t>(fileToSend, files);
 
 				putFile(fileToSend, branch->getPath());
-				putFile(fileToSend, Shit::Path::headRelative);
+				putFile(fileToSend, shit.headRelative);
 
 
 

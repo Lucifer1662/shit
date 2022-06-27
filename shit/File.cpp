@@ -6,35 +6,35 @@
 #include "sha1.h"
 #include "Path.h"
 
-File::File(std::string type, Key key): type(type), key(key)
+File::File(Shit& shit, std::string type, Key key): shit(shit), type(type), key(key)
 {
 
 }
 
-File::File(const File& file): type(file.type), key(file.key)
+File::File(const File& file): shit(file.shit), type(file.type), key(file.key)
 {
 }
 
 std::string File::getPath() {
-	return Shit::Path::shitDirectory + type+ "\\" + key;
+	return shit.shitDirectory + type+ "\\" + key;
 }
 
 
-File File::createFileFromPath(std::string type, std::string path)
+File File::createFileFromPath(Shit& shit, std::string type, std::string path)
 {
-	auto key = getKeyFromFile(path);
+	auto key = getKeyFromFile(shit, path);
 
 
-	std::filesystem::create_directories(Shit::Path::shitDirectory + type + "\\");
-	std::filesystem::copy(Shit::Path::workingDirectory + path, Shit::Path::shitDirectory + type + "\\" + key, std::filesystem::copy_options::overwrite_existing);
+	std::filesystem::create_directories(shit.shitDirectory + type + "\\");
+	std::filesystem::copy(shit.workingDirectory + path, shit.shitDirectory + type + "\\" + key, std::filesystem::copy_options::overwrite_existing);
 
-	return File(type, key);
+	return File(shit, type, key);
 }
 
-File::Key File::getKeyFromFile(std::string path)
+File::Key File::getKeyFromFile(Shit& shit, std::string path)
 {
 	std::string content;
-	std::fstream stream(Shit::Path::workingDirectory + path, std::fstream::in);
+	std::fstream stream(shit.workingDirectory + path, std::fstream::in);
 	std::string line;
 	while (std::getline(stream, line)) {
 		content += line;
@@ -45,15 +45,15 @@ File::Key File::getKeyFromFile(std::string path)
 	return sha1(content);
 }
 
-File File::createFileFromContent(std::string type, std::string content)
+File File::createFileFromContent(Shit& shit, std::string type, std::string content)
 {
 	auto key = sha1(content);
-	auto path = Shit::Path::shitDirectory + type + "\\";
+	auto path = shit.shitDirectory + type + "\\";
 	std::filesystem::create_directories(path );
 	std::ofstream f(path + key);
 	if(f.good())
 		f << content;
 	f.close();
 
-	return File(type, key);
+	return File(shit, type, key);
 }
